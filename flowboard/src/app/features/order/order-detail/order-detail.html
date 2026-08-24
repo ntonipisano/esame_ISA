@@ -1,0 +1,39 @@
+@if (order$ | async; as order) {
+  <section class="container">
+    <header>
+      <h2>Dettagli ordine n.{{ order.id }}</h2>
+    </header>
+
+    <mat-card class="mat-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Totale: {{ order.total | currency:'EUR' }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Effettuato il: {{ order.createdAt | date }}
+        </p>
+        <p>
+          Stato: @if (order.status === 'pending') { In attesa } 
+                      @else if (order.status === 'shipped') { Spedito } 
+                      @else if (order.status === 'delivered') { Consegnato } 
+                      @else if (order.status === 'canceled') { Annullato } 
+        </p>
+        <p>
+          Indirizzo di spedizione: {{ order.address }}, {{ order.city }}, {{ order.cap }}
+        </p>
+        <h2>Prodotti acquistati</h2>
+        <ul class="no-bullets">
+          @for (item of order.items; track item.product.id) {
+            <li><img mat-card-image [src]="item.product.thumbnail" class="small-thumbnail" routerLink="/products/{{ item.product.id }}">
+              <a [routerLink]="['/products', item.product.id]"> {{ item.product.title }} </a>Quantità: {{ item.quantity }}, Prezzo unitario: {{ item.unit_price | currency:'EUR' }}</li>
+          }
+        </ul>
+      </mat-card-content>
+      <button mat-button color="primary" routerLink="/orders">
+          Torna agli ordini
+        </button>
+    </mat-card>
+  </section>
+} @else {
+  <p>Nessun ordine trovato.</p>
+}

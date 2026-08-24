@@ -1,0 +1,63 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/orders":
+    post:
+      summary: Creates an order
+      tags:
+      - Orders
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: order created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    total:
+                      type: number
+                    status:
+                      type: string
+                    name:
+                      type: string
+                    surname:
+                      type: string
+                    email:
+                      type: string
+                    address:
+                      type: string
+                    city:
+                      type: string
+                    cap:
+                      type: string
+                  required:
+                  - total
+                  - status
+                  - name
+                  - surname
+                  - email
+                  - address
+                  - city
+                  - cap
+              required:
+              - order
+servers:
+- url: http://localhost:3000
+  variables:
+    defaultHost:
+      default: www.example.com

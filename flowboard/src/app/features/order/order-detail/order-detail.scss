@@ -1,0 +1,127 @@
+.order-detail-container {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e5e9f0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.order-detail-header h1 {
+  font-size: 1.75rem;
+  color: #1e293b;
+  margin: 0;
+  font-weight: 700;
+}
+
+.order-status {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-status.pending {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+}
+
+.order-status.completed {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+}
+
+mat-card {
+  border-radius: 12px;
+  border: 1px solid #e5e9f0;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+}
+
+mat-card:hover {
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+  border-color: #6366f1;
+}
+
+.small-thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.small-thumbnail:hover {
+  transform: scale(1.1);
+  border-color: #6366f1;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+.no-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.no-bullets li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f0f4f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #64748b;
+}
+
+.no-bullets li:last-child {
+  border-bottom: none;
+}
+
+.order-total {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6366f1;
+  padding: 1.5rem 0;
+  border-top: 2px solid #e5e9f0;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+mat-card-actions {
+  padding: 1rem 1.5rem;
+  background: linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+  border-top: 1px solid #e5e9f0;
+  gap: 0.75rem;
+}
+
+mat-card-actions button {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+mat-card-actions button:hover {
+  transform: translateY(-2px);
+}
+

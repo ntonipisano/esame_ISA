@@ -1,0 +1,31 @@
+<mat-sidenav-container class="header-sidenav-container">
+  <mat-sidenav #drawer mode="over" position="start">
+    <mat-nav-list>
+      <button mat-button routerLink="/products" (click)="drawer.close()">Catalogo Prodotti</button>
+      @if (auth.isAuthenticated()) {
+      <button mat-button routerLink="/wishlist" (click)="drawer.close()">Wishlist</button>
+      <button mat-button routerLink="/orders" (click)="drawer.close()">I miei ordini</button>  
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button mat-icon-button (click)="drawer.toggle()" aria-label="Open menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Tennis & Padel Store</span>
+      <span class="example-spacer"></span>
+      @if (auth.isAuthenticated()) {
+        <button mat-button (click)="toggleLogin()">Logout</button>
+      } @else {
+        <button mat-icon-button aria-label="Login" (click)="toggleLogin()">
+          <mat-icon>person</mat-icon>
+        </button>
+      }
+      <button mat-icon-button class="favorite-icon" aria-label="Carrello" (click)="goToCart()">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,51 @@
+<h1>La mia wishlist</h1>
+
+@if (wishlist$ | async; as wishlist) {
+
+  @if (wishlist.length === 0) {
+    <p>La tua wishlist è vuota 💔</p>
+  }
+
+  <div class="wishlist-grid">
+    @for (item of wishlist; track item.id) {
+      <mat-card appearance="outlined">
+
+        <mat-card-header>
+          <mat-card-title
+            class="clickable-title"
+            [routerLink]="['/products', item.product.id]">
+            {{ item.product.title }}
+          </mat-card-title>
+
+          <button mat-icon-button color="warn"
+                  (click)="remove(item.product.id)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <img mat-card-image
+             [src]="item.product.thumbnail"
+             [alt]="item.product.title"
+             [routerLink]="['/products', item.product.id]"
+             style="cursor: pointer;">
+
+        <mat-card-content>
+          <p>{{ item.product.price | currency:'EUR' }}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button
+                  [routerLink]="['/products', item.product.id]">
+            Vedi prodotto
+          </button>
+          <button mat-button
+                  (click)="onAddToCart(item.product)">
+            Aggiungi al carrello
+          </button>
+        </mat-card-actions>
+
+      </mat-card>
+    }
+  </div>
+
+}

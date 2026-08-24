@@ -1,0 +1,72 @@
+<h1>Carrello</h1>
+
+@if (cart$ | async; as cart) {
+
+  @if (cart.cart_items.length === 0) {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <mat-card-subtitle>Il tuo carrello è vuoto!</mat-card-subtitle>
+        <button mat-raised-button routerLink="/products" color="primary" > Torna al catalogo </button>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+
+    <mat-list>
+
+      @for (item of cart.cart_items; track item.id) {
+        <mat-list-item>
+
+  <img
+    matListItemAvatar
+    [src]="item.product.thumbnail"
+    [alt]="item.product.title"
+  />
+
+  <div matListItemTitle>
+    {{ item.product.title }}
+  </div>
+
+  <div matListItemLine>
+    Prezzo: {{ item.unit_price | currency:'EUR' }}
+  </div>
+
+  <div matListItemMeta class="cart-actions">
+    <mat-form-field appearance="outline" class="qty-field">
+      <input
+        matInput
+        type="number"
+        min="1"
+        [value]="item.quantity"
+        (change)="updateQuantity(item.id, $any($event.target).value)"
+      />
+    </mat-form-field>
+
+    <button
+      mat-icon-button
+      color="warn"
+      (click)="removeItem(item.id)"
+      aria-label="Rimuovi prodotto"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+</mat-list-item>
+      }
+    </mat-list>
+
+    <mat-divider></mat-divider>
+
+    <mat-card appearance="outlined" class="cart-summary">
+      <mat-card-content>
+        <h3>Totale provvisorio carrello: {{ total$ | async | currency:'EUR' }}</h3>
+
+        <button mat-raised-button color="primary" routerLink="/checkout">
+          Procedi al checkout
+        </button>
+      </mat-card-content>
+    </mat-card>
+  }
+
+}
+

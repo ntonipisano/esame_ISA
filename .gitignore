@@ -1,0 +1,23 @@
+# ===== Angular =====
+flowboard/node_modules/
+flowboard/dist/
+flowboard/.angular/
+flowboard/.env
+
+# ===== Rails =====
+flowboard-backend_api/log/*
+flowboard-backend_api/tmp/*
+flowboard-backend_api/storage/*
+flowboard-backend_api/.env
+flowboard-backend_api/db/*.sqlite3
+flowboard-backend_api/db/*.sqlite3-journal
+
+# ===== Ruby =====
+.bundle/
+vendor/bundle/
+
+# ===== OS / IDE =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

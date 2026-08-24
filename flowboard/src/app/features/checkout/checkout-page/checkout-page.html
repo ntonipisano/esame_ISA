@@ -1,0 +1,118 @@
+<div class="checkout-container">
+	<div class="checkout-left">
+		<form class="checkout-form"
+			[formGroup]="form"
+			(submit)="onSubmit()">
+
+			@if (showSummary && form.invalid) {
+				<div class="error-summary" role="status" aria-live="polite">
+					<h2>Il form contiene errori. Controlla i campi digitati prima di procedere.</h2>
+				</div>
+			}
+
+			<section formGroupName="customer">
+				<h2>Dati cliente</h2>
+				<mat-form-field appearance="outline">
+					<mat-label>Nome</mat-label>
+					@if (hasError('customer.firstName','required')) {
+						<mat-error>Il nome è obbligatorio.</mat-error>
+					}
+					<input matInput formControlName="firstName" />
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Cognome</mat-label>
+					@if (hasError('customer.lastName','required')) {
+						<mat-error>Il cognome è obbligatorio.</mat-error>
+					}
+					<input matInput formControlName="lastName" />
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Email</mat-label>
+					<input matInput formControlName="email" />
+					@if (hasError('customer.email','required')) {
+						<mat-error>L'email è obbligatoria</mat-error>
+					}
+					@if (hasError('customer.email','email')) {
+						<mat-error>Formato email non valido</mat-error>
+					}
+				</mat-form-field>
+			</section>
+
+			<div formGroupName="address">
+				<h2>Indirizzo</h2>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Via</mat-label>
+					<input matInput formControlName="street" />
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>CAP</mat-label>
+					@if (hasError('address.zip','pattern')) {
+						<mat-error>CAP non valido.</mat-error>
+					}
+					<input matInput formControlName="zip" />
+				</mat-form-field>
+
+				<mat-form-field appearance="outline">
+					<mat-label>Città</mat-label>
+					<input matInput formControlName="city" />
+				</mat-form-field>
+			</div>
+
+			<mat-select formControlName="shippingMethod" placeholder="Metodo di spedizione">
+				<mat-option value="standard">Spedizione standard (3-5 giorni) - €5.00</mat-option>
+				<mat-option value="express">Spedizione express (1-2 giorni) - €15.00</mat-option>
+			</mat-select>
+
+			<mat-checkbox formControlName="privacy">
+				Accetto termini di vendita e privacy
+				@if (hasError('privacy','required')) {
+					<mat-error>Devi accettare i termini per procedere con l'ordine.</mat-error>
+				}
+			</mat-checkbox>
+
+			<div class="form-actions">
+				<button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !(items$ | async)?.length">
+
+					 @if (loading) {
+					<mat-progress-spinner
+						diameter="18"
+						mode="indeterminate">
+					</mat-progress-spinner>
+					<span class="loading-text">Invio ordine...</span>
+					} @else {
+					Conferma ordine
+					}
+
+				</button>
+			</div>
+		</form>
+	</div>
+
+<aside class="checkout-right">
+  <section class="cart-summary">
+    <h2>Riepilogo carrello</h2>
+
+    @if ((items$ | async)?.length) {
+      <ul class="no-bullets">
+        @for (item of items$ | async; track item.id) {
+          <li>
+            {{ item.product.title }} (x{{ item.quantity }}) — {{ item.unit_price * item.quantity | currency:'EUR' }}
+          </li>
+        }
+      </ul>
+
+      <p class="shipping">Spedizione: <strong>{{ shippingCost$ | async | currency:'EUR' }}</strong></p>
+      <p class="total">Totale: <strong>{{ backendTotal$ | async | currency:'EUR' }}</strong></p>
+      <p class="total">Totale (con spedizione): <strong>{{ totalWithShipping$ | async | currency:'EUR' }}</strong></p>
+    } @else {
+      <p>Il carrello è vuoto</p>
+      <p>Aggiungi prodotti prima di procedere.</p>
+    }
+  </section>
+</aside>
+
+</div>

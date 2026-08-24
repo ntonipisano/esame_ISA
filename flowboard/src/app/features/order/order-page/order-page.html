@@ -1,0 +1,61 @@
+<section class="container">
+  <header>
+    <h2>I tuoi ordini</h2>
+  </header>
+
+  <form class="filters">
+    <mat-form-field>
+      <mat-label>Stato ordine</mat-label>
+      <mat-select (selectionChange)="updateStatus($any($event.value))">
+        <mat-option value="">Tutti</mat-option>
+        <mat-option value="pending">In attesa</mat-option>
+        <mat-option value="shipped">Spedito</mat-option>
+        <mat-option value="delivered">Consegnato</mat-option>
+        <mat-option value="cancelled">Annullato</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Ordina per</mat-label>
+      <mat-select (selectionChange)="updateSort($any($event.value))">
+        <mat-option value="dateDesc">Dal più recente</mat-option>
+        <mat-option value="dateAsc">Dal più vecchio</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Da data</mat-label>
+    <input
+      matInput
+      type="date"
+      (change)="updateFromDate($any($event.target).value)"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>A data</mat-label>
+    <input
+      matInput
+      type="date"
+      (change)="updateToDate($any($event.target).value)"
+    />
+  </mat-form-field>
+
+  <mat-paginator
+    [length]="(filteredOrders$ | async)?.length || 0"
+    [pageSize]="pageSize"
+    [pageIndex]="((page$ | async) || 1) - 1"
+    (page)="onPage($event)">
+  </mat-paginator>
+
+  @if ((filteredOrders$ | async)?.length === 0) {
+    <div class="empty-state">
+      <p>Non hai ancora effettuato un ordine</p>
+    </div>
+  } @else {
+    @for (o of paged$ | async; track o.id) {
+      <app-order-card [order]="o"></app-order-card>
+    }
+  }
+</section>

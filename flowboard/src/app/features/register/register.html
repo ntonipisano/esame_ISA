@@ -1,0 +1,77 @@
+<h1>Inserisci qui i tuoi dati per la registrazione</h1>
+<div class="register-container">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (submit)="submit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          @if (hasError('email','required')) {
+          <mat-error>Email obbligatoria</mat-error>
+          }
+          @if (hasError('email','email')) {
+          <mat-error>Formato email non valido</mat-error>
+          }
+          @if (hasError('email','emailTaken')) {
+          <mat-error>Errore: email già in uso.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+          @if (hasError('password','required')) {
+          <mat-error>Password obbligatoria</mat-error>
+          }
+          @if (hasError('password','minlength')) {
+          <mat-error>Minimo 6 caratteri per la password</mat-error>
+          }
+          @if (hasError('password','pattern')) {
+          <mat-error>La password deve contenere almeno un carattere speciale tra i seguenti: @$!%*?&</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Conferma Password</mat-label>
+          <input matInput type="password" formControlName="passwordConfirm" required>
+          @if (hasError('passwordConfirm','required')) {
+          <mat-error>Conferma password obbligatoria</mat-error>
+          }
+            @if (hasError('passwordConfirm','passwordsMismatch')) {
+          <mat-error>Le password non coincidono</mat-error>
+          }
+        </mat-form-field>
+
+        @if (error) {
+        <div class="error-msg">
+          Registrazione fallita. Riprova.
+        </div>
+        }
+
+        <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="form.invalid || loading"> 
+          @if (loading) {
+            <div class="spinner-container">
+               <mat-progress-spinner
+                  diameter="24"
+                  mode="indeterminate">
+               </mat-progress-spinner>
+               <span>Caricamento...</span>
+            </div>
+          } @else {
+             Registrati
+          }
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <a mat-button [routerLink]="['/login']">Hai già un account? Accedi</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

@@ -1,0 +1,69 @@
+<section class="container">   
+    <header>
+    <h2>I nostri prodotti</h2>
+    </header>
+
+    <form class = "filters">
+        <mat-form-field class="example-form-field">
+            <mat-label>Cerca</mat-label>
+        <input
+        matInput 
+        type = "search" 
+        name = "title" 
+        placeholder="Cerca per titolo"
+        (input)="updateTitle($any($event.target).value)"
+        />
+        </mat-form-field>
+
+        <mat-form-field class="example-form-field">
+            <mat-label>Ordina per</mat-label>
+            <mat-select (selectionChange)="updateSort($any($event.value))" >
+                <mat-option value="priceAsc">Prezzo: dal più basso al più alto</mat-option>
+                <mat-option value="priceDesc">Prezzo: dal più alto al più basso</mat-option>
+                <mat-option value="dateAsc">Data: dal più vecchio al più recente</mat-option>
+                <mat-option value="dateDesc">Data: dal più recente al più vecchio</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="price-fields">
+            <mat-form-field appearance="outline" class="price-field">
+                <mat-label>Prezzo min</mat-label>
+                <input
+                matInput
+                type="number"
+                min="0"
+                step="0.1"
+                (input)="updateMinPrice($any($event.target).value)"
+                />
+                <span matSuffix>€</span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="price-field">
+                <mat-label>Prezzo max</mat-label>
+                <input
+                matInput
+                type="number"
+                min="0"
+                step="0.1"
+                (input)="updateMaxPrice($any($event.target).value)"
+                />
+                <span matSuffix>€</span>
+            </mat-form-field>
+        </div>
+    </form>
+
+    @for (p of paged$ | async; track p.id) {
+        
+        <app-product-card [product]="p" (add)="onAddToCart($event)"> 
+        </app-product-card>
+    
+    }
+
+    <mat-paginator
+    [length]="(filteredProducts$ | async)?.length || 0"
+    [pageSize]="pageSize"
+    [pageIndex]="((page$ | async)|| 1)-1"
+    (page)="onPage($event)">
+    </mat-paginator>
+    
+</section>

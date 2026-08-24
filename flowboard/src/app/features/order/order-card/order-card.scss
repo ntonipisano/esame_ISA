@@ -1,0 +1,50 @@
+mat-card {
+  border-radius: 12px;
+  border: 1px solid #e5e9f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+}
+
+mat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.15);
+  border-color: #6366f1;
+}
+
+.clickable-title {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+
+  &:hover {
+    text-decoration: underline;
+    transform: translateX(4px);
+    color: #6366f1;
+    background-color: #f0f4f8;
+  }
+}
+
+mat-card-content {
+  padding: 1.5rem;
+}
+
+mat-card-actions {
+  padding: 1rem 1.5rem;
+  background: linear-gradient(90deg, #f9fafb 0%, #f3f4f6 100%);
+  border-top: 1px solid #e5e9f0;
+  gap: 0.75rem;
+}
+
+mat-card-actions button {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+mat-card-actions button:hover {
+  transform: scale(1.02);
+}

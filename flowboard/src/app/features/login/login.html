@@ -1,0 +1,49 @@
+<div class="login-container">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (submit)="submit()">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          @if (hasError('email','required')) {
+            <mat-error> Email obbligatoria</mat-error>
+          }
+          @if (hasError('email','email')) {
+            <mat-error> Formato email non valido </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+            @if (hasError('password','required')) {
+                <mat-error>
+                Password obbligatoria
+                </mat-error>
+            }
+        </mat-form-field>
+
+        @if (error) {
+        <div class="error-msg">
+          Email o password errati
+        </div>
+        }
+
+        <button mat-raised-button type="submit" class="full-width">
+          Accedi
+        </button>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <a mat-button [routerLink]="['/register']"> Nuovo utente: registrati</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

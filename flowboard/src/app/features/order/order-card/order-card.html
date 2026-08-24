@@ -1,0 +1,15 @@
+<mat-card class="mat-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title class="clickable-title" [routerLink]="['/orders', order.id]">Ordine numero: {{ order.id }}</mat-card-title>
+    <mat-card-subtitle>{{ order.total | currency:'EUR' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      Effettuato il: {{ order.createdAt | date }}
+    </p>
+  </mat-card-content>
+</mat-card>
+
+
+
+

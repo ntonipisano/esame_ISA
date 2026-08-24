@@ -1,0 +1,21 @@
+<mat-card class="mat-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title class="clickable-title" [routerLink]="['/products', product.id]">{{ product.title }}</mat-card-title>
+    <mat-card-title>{{ product.price | currency:'EUR' }}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image [src]="product.thumbnail" [alt]="product.title" style= "cursor: pointer;" [routerLink]="['/products', product.id]">
+
+  <mat-card-content>
+    <p>
+      Aggiunto il: {{ product.createdAt | date }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="actions-row">
+    <button mat-button (click)="add.emit(product)">Aggiungi al carrello</button>
+     <button mat-icon-button color="warn" class="wishlist-btn" (click)="toggleWishlist()">
+      <mat-icon>
+        {{ (inWishlist$ | async) ? 'favorite' : 'favorite_border' }}
+      </mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

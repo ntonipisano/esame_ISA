@@ -1,6 +1,6 @@
 # E-Commerce Tennis & Padel Store
 
-Progetto di un e-commerce full-stack sviluppato con **Ruby on Rails** (backend API) e **Angular** (frontend), realizzato per l’esame di Progetto di Sistemi Web.
+Progetto di un e-commerce full-stack sviluppato con **Ruby on Rails** (backend API) e **Angular** (frontend), realizzato per l’esame di Ingegneria del Software Avanzata.
 
 ## Prerequisiti software
 

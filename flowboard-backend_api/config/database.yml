@@ -3,7 +3,7 @@ default: &default
   encoding: utf8mb4
   username: root
   password: 28112002
-  host: localhost
+  host: 127.0.0.1
 
 development:
   <<: *default

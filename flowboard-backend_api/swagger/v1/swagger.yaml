@@ -4,6 +4,191 @@ info:
   title: API V1
   version: v1
 paths:
+  "/auth/register":
+    post:
+      summary: Registra un nuovo utente
+      tags:
+      - Auth
+      parameters: []
+      responses:
+        '201':
+          description: utente registrato
+        '422':
+          description: email gia esistente o non valida
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                  - email
+                  - password
+              required:
+              - user
+  "/auth/login":
+    post:
+      summary: Effettua il login
+      tags:
+      - Auth
+      parameters: []
+      responses:
+        '200':
+          description: login effettuato
+        '401':
+          description: credenziali non valide
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/auth/me":
+    get:
+      summary: Restituisce i dati dell utente corrente
+      tags:
+      - Auth
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: utente trovato
+        '401':
+          description: non autorizzato
+  "/auth/logout":
+    post:
+      summary: Effettua il logout
+      tags:
+      - Auth
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: logout completato
+  "/cart/items":
+    post:
+      summary: Aggiunge un elemento al carrello
+      tags:
+      - Cart Items
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: articolo aggiunto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+              required:
+              - product_id
+              - quantity
+  "/cart/items/{id}":
+    patch:
+      summary: Aggiorna la quantita di un elemento
+      tags:
+      - Cart Items
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: quantita aggiornata
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+              required:
+              - quantity
+    delete:
+      summary: Rimuove un elemento dal carrello
+      tags:
+      - Cart Items
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: articolo rimosso
+  "/cart":
+    get:
+      summary: Recupera il carrello dell utente
+      tags:
+      - Cart
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: carrello recuperato
+  "/cart/summary":
+    get:
+      summary: Recupera il riepilogo e il totale del carrello
+      tags:
+      - Cart
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: riepilogo calcolato
   "/orders":
     post:
       summary: Creates an order
@@ -56,6 +241,90 @@ paths:
                   - cap
               required:
               - order
+  "/products":
+    get:
+      summary: Recupera tutti i prodotti
+      tags:
+      - Products
+      responses:
+        '200':
+          description: prodotti trovati
+  "/products/{id}":
+    get:
+      summary: Recupera il dettaglio di un prodotto
+      tags:
+      - Products
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: prodotto trovato
+        '404':
+          description: prodotto non trovato
+  "/wishlist":
+    get:
+      summary: Recupera tutti i prodotti nei preferiti
+      tags:
+      - Wishlist
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: wishlist recuperata
+    post:
+      summary: Aggiunge un prodotto ai preferiti
+      tags:
+      - Wishlist
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: prodotto aggiunto ai preferiti
+        '422':
+          description: prodotto gia presente
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+              required:
+              - product_id
+  "/wishlist/{id}":
+    delete:
+      summary: Rimuove un prodotto dai preferiti usando product_id
+      tags:
+      - Wishlist
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: prodotto rimosso con successo
+        '404':
+          description: prodotto non presente nella wishlist
 servers:
 - url: http://localhost:3000
   variables:

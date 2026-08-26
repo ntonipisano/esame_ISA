@@ -124,6 +124,11 @@ GEM
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
+    factory_bot (6.6.0)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.1)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
     faker (3.5.3)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.3-x64-mingw-ucrt)
@@ -261,6 +266,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.1)
+    rantly (3.0.0)
     rdoc (7.0.3)
       erb
       psych (>= 4.0.0)
@@ -336,6 +342,9 @@ GEM
       ffi (~> 1.12)
       logger
     securerandom (0.4.1)
+    shoulda-matchers (6.5.0)
+      activesupport (>= 5.2.0)
+    simplecov (1.1.1)
     solid_cable (3.0.12)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -400,6 +409,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  factory_bot_rails
   faker
   image_processing (~> 1.2)
   kamal
@@ -407,9 +417,12 @@ DEPENDENCIES
   puma (>= 5.0)
   rack-cors
   rails (~> 8.1.1)
+  rantly
   rspec-rails
   rswag
   rubocop-rails-omakase
+  shoulda-matchers (~> 6.0)
+  simplecov
   solid_cable
   solid_cache
   solid_queue

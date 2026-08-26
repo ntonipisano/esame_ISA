@@ -61,4 +61,8 @@ group :development, :test do
   gem 'faker'
   gem 'rswag'
 
+  gem 'simplecov', require: false          # Misura di copertura
+  gem 'factory_bot_rails'                  # Generazione dati di test
+  gem 'shoulda-matchers', '~> 6.0'         # Test rapidi su modelli e validazioni
+  gem 'rantly'
 end

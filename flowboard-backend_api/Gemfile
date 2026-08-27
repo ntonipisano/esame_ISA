@@ -65,4 +65,5 @@ group :development, :test do
   gem 'factory_bot_rails'                  # Generazione dati di test
   gem 'shoulda-matchers', '~> 6.0'         # Test rapidi su modelli e validazioni
   gem 'rantly'
+  gem 'prop_check'
 end

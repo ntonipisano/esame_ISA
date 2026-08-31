@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
 
     begin
       # Decodifica il token JWT usando la stessa chiave del backend
-      secret = Rails.application.credentials.secret_key_base
+      secret = ENV.fetch("DEVISE_JWT_SECRET")
       decoded = JWT.decode(token, secret, true, algorithm: 'HS256')
       user_id = decoded[0]['sub']
       User.find_by(id: user_id)

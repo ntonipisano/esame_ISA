@@ -1,0 +1,53 @@
+services:
+
+  db:
+    image: mysql:8.0
+    container_name: esame_isa_db
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MY_SQL_PASSWORD}
+      MYSQL_DATABASE: e-commerce
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    ports:
+      - "3306:3306"
+
+
+  backend:
+    build:
+      context: ./flowboard-backend_api
+
+    container_name: esame_isa_backend
+
+    environment:
+      RAILS_ENV: development
+
+      DATABASE_HOST: db
+      DATABASE_NAME: e-commerce
+      DATABASE_USERNAME: root
+      MY_SQL_PASSWORD: ${MY_SQL_PASSWORD}
+      DEVISE_JWT_SECRET: ${DEVISE_JWT_SECRET}
+
+    depends_on:
+      - db
+
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: ./flowboard
+
+    container_name: esame_isa_frontend
+
+    depends_on:
+      - backend
+
+    ports:
+      - "4200:4200"
+
+
+volumes:
+  mysql_data:

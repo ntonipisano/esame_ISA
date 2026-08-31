@@ -100,7 +100,7 @@ docker compose version
 
 ## Configurazione delle variabili d'ambiente
 
-Il progetto utilizza alcune variabili d'ambiente per configurare il database e le Rails Credentials.
+Il progetto utilizza alcune variabili d'ambiente per configurare il database e la chiave JWT.
 
 Creare un file `.env` nella root del progetto `esame_ISA`.
 

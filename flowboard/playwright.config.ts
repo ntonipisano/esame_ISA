@@ -45,24 +45,21 @@ export default defineConfig({
 
   // Avvia automaticamente Angular e Rails
   // prima dell'esecuzione dei test.
-  webServer: process.env.CI
-    ? undefined
-    : [
-        {
-          command: 'npm start -- --host 0.0.0.0 --port 4200',
-          url: 'http://localhost:4200',
-          name: 'Angular',
-          reuseExistingServer: true,
-          timeout: 120 * 1000,
-        },
-        {
-          command:
-            'cd ../flowboard-backend_api && bundle exec rails server -b 0.0.0.0 -p 3000',
-          url: 'http://localhost:3000',
-          name: 'Rails',
-          reuseExistingServer: true,
-          timeout: 120 * 1000,
-        },
-      ],
+  webServer: [
+    {
+      command: 'npm start -- --host 127.0.0.1 --port 4200',
+      url: 'http://127.0.0.1:4200',
+      name: 'Angular',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120 * 1000,
+    },
+    {
+      command: 'cd ../flowboard-backend_api && bundle exec rails server -b 127.0.0.1 -p 3000',
+      url: 'http://127.0.0.1:3000',
+      name: 'Rails',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120 * 1000,
+    },
+  ],
 });
 

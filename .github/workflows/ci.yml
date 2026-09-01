@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env: DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # =========================
+      # BACKEND - Ruby on Rails
+      # =========================
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4.7"
+          working-directory: flowboard-backend_api
+          bundler-cache: true
+
+      - name: Run RSpec tests
+        working-directory: flowboard-backend_api
+        run: bundle exec rspec
+
+      # =========================
+      # FRONTEND - Angular
+      # =========================
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: flowboard/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: flowboard
+        run: npm ci
+
+      - name: Build Angular application
+        working-directory: flowboard
+        run: npm run build
+
+      # =========================
+      # E2E - Playwright
+      # =========================
+
+      - name: Install Playwright browsers
+        working-directory: flowboard
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E tests
+        working-directory: flowboard
+        run: npx playwright test

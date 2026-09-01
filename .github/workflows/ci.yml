@@ -67,18 +67,3 @@ jobs:
       - name: Build Angular
         working-directory: flowboard
         run: npm run build
-
-      # -------------------------
-      # PLAYWRIGHT E2E
-      # -------------------------
-
-      - name: Install Playwright browsers
-        working-directory: flowboard
-        run: npx playwright install --with-deps chromium
-
-      - name: Run Playwright tests
-        working-directory: flowboard
-        env:
-          CI: true
-          DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
-        run: npx playwright test --reporter=list

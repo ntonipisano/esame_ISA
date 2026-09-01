@@ -54,7 +54,7 @@ export default defineConfig({
       timeout: 120 * 1000,
     },
     {
-      command: 'cd ../flowboard-backend_api && RAILS_ENV=test bundle exec rails server -b 0.0.0.0 -p 3000',
+      command: 'cd ../flowboard-backend_api && bundle exec rails server -b 0.0.0.0 -p 3000',
       url: 'http://localhost:3000',
       name: 'Rails',
       reuseExistingServer: !process.env.CI,

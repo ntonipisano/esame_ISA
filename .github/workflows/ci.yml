@@ -73,22 +73,33 @@ jobs:
         working-directory: flowboard
         run: npx playwright install --with-deps chromium
 
-      - name: Check servers before Playwright
+      - name: Check Rails
+        working-directory: flowboard-backend_api
+        env:
+          RAILS_ENV: test
+          DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
         run: |
-          echo "===== PROCESSI ====="
-          ps aux | grep -E "rails|angular|ng " | grep -v grep || true
+          echo "=== Rails routes ==="
+          bundle exec rails routes > /tmp/routes.txt
+          head -30 /tmp/routes.txt
 
           echo ""
-          echo "===== PORTA 3000 (Rails) ====="
-          curl -I http://localhost:3000 || true
+          echo "=== Starting Rails manually ==="
+          bundle exec rails server -b 0.0.0.0 -p 3000 > /tmp/rails.log 2>&1 &
+
+          sleep 10
 
           echo ""
-          echo "===== PORTA 4200 (Angular) ====="
-          curl -I http://localhost:4200 || true
+          echo "=== Rails process ==="
+          ps aux | grep "[r]ails server" || true
 
           echo ""
-          echo "===== PORTE IN ASCOLTO ====="
-          ss -ltnp || true
+          echo "=== Rails log ==="
+          cat /tmp/rails.log
+
+          echo ""
+          echo "=== Testing localhost:3000 ==="
+          curl -v http://localhost:3000/ || true
 
       - name: Run Playwright tests
         working-directory: flowboard

@@ -13,8 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
+
     steps:
-      # Checkout del repository
+      # Checkout
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -31,14 +34,15 @@ jobs:
 
       - name: Prepare test database
         working-directory: flowboard-backend_api
+        env:
+          RAILS_ENV: test
         run: |
-          bundle exec rails db:create RAILS_ENV=test
-          bundle exec rails db:migrate RAILS_ENV=test
+          bundle exec rails db:create
+          bundle exec rails db:migrate
 
       - name: Run RSpec
         working-directory: flowboard-backend_api
         env:
-          DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
           RAILS_ENV: test
         run: bundle exec rspec
 
@@ -73,5 +77,4 @@ jobs:
         working-directory: flowboard
         env:
           CI: true
-          DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
         run: npx playwright test

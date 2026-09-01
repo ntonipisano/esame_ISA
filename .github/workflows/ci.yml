@@ -77,4 +77,5 @@ jobs:
         working-directory: flowboard
         env:
           CI: true
-        run: npx playwright test
+          DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
+        run: npx playwright test --reporter=list

@@ -17,7 +17,10 @@ jobs:
       DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
 
     steps:
-      # Checkout
+      # -------------------------
+      # CHECKOUT
+      # -------------------------
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -72,34 +75,6 @@ jobs:
       - name: Install Playwright browsers
         working-directory: flowboard
         run: npx playwright install --with-deps chromium
-
-      - name: Check Rails
-        working-directory: flowboard-backend_api
-        env:
-          RAILS_ENV: test
-          DEVISE_JWT_SECRET: ${{ secrets.DEVISE_JWT_SECRET }}
-        run: |
-          echo "=== Rails routes ==="
-          bundle exec rails routes > /tmp/routes.txt
-          head -30 /tmp/routes.txt
-
-          echo ""
-          echo "=== Starting Rails manually ==="
-          bundle exec rails server -b 0.0.0.0 -p 3000 > /tmp/rails.log 2>&1 &
-
-          sleep 10
-
-          echo ""
-          echo "=== Rails process ==="
-          ps aux | grep "[r]ails server" || true
-
-          echo ""
-          echo "=== Rails log ==="
-          cat /tmp/rails.log
-
-          echo ""
-          echo "=== Testing localhost:3000 ==="
-          curl -v http://localhost:3000/ || true
 
       - name: Run Playwright tests
         working-directory: flowboard

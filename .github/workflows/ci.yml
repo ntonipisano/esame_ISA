@@ -73,6 +73,23 @@ jobs:
         working-directory: flowboard
         run: npx playwright install --with-deps chromium
 
+      - name: Check servers before Playwright
+        run: |
+          echo "===== PROCESSI ====="
+          ps aux | grep -E "rails|angular|ng " | grep -v grep || true
+
+          echo ""
+          echo "===== PORTA 3000 (Rails) ====="
+          curl -I http://localhost:3000 || true
+
+          echo ""
+          echo "===== PORTA 4200 (Angular) ====="
+          curl -I http://localhost:4200 || true
+
+          echo ""
+          echo "===== PORTE IN ASCOLTO ====="
+          ss -ltnp || true
+
       - name: Run Playwright tests
         working-directory: flowboard
         env:

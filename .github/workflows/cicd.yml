@@ -11,10 +11,6 @@ permissions:
 
 jobs:
 
-  # =====================================================
-  # CI - BACKEND TESTS
-  # =====================================================
-
   ci:
     runs-on: ubuntu-latest
 
@@ -23,16 +19,8 @@ jobs:
 
     steps:
 
-      # -------------------------
-      # CHECKOUT
-      # -------------------------
-
       - name: Checkout
         uses: actions/checkout@v4
-
-      # -------------------------
-      # BACKEND - Ruby on Rails
-      # -------------------------
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -56,30 +44,16 @@ jobs:
         run: bundle exec rspec
 
 
-  # =====================================================
-  # CD - DOCKER HUB
-  # =====================================================
-
   cd:
     needs: ci
     runs-on: ubuntu-latest
 
-    # Il CD viene eseguito solo sui push su main,
-    # non sui pull request.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
 
-      # -------------------------
-      # CHECKOUT
-      # -------------------------
-
       - name: Checkout
         uses: actions/checkout@v4
-
-      # -------------------------
-      # DOCKER HUB LOGIN
-      # -------------------------
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -87,16 +61,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # -------------------------
-      # DOCKER BUILDX
-      # -------------------------
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      # -------------------------
-      # BACKEND IMAGE
-      # -------------------------
 
       - name: Build and push backend image
         uses: docker/build-push-action@v7
@@ -104,10 +70,6 @@ jobs:
           context: ./flowboard-backend_api
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/flowboard-backend:latest
-
-      # -------------------------
-      # FRONTEND IMAGE
-      # -------------------------
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v7

@@ -29,10 +29,10 @@ ng version
 
 ## Installazione del progetto
 Clonare il repository:
-```git clone https://github.com/ntonipisano/e-commerce-psw.git```
+```git clone https://github.com/ntonipisano/esame_ISA.git```
 
 ### Entra nella cartella di progetto
-```cd e-commerce-psw```
+```cd esame_ISA```
 
 ## Setup backend Rails e database
 ### Entra nella cartella di backend
